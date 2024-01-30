@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ログイン画面</title>
+        <style>
+            .app{
+                width: 30em;
+                padding: 0 1em 1em 1em;
+                margin-left: auto;
+                margin-right: auto;
+                border: 1px solid;
+                background-color: bisque;
+            }
+            label{
+                margin-right: 1em;
+            }
+            .flash{
+                background-color: red;
+                color: white;
+                height:2em;
+                margin-bottom: 1em;
+            }
+            .space{
+                margin-top: 1em;
+            }
+        </style>
+
+    </head>
+    <body>
+<h1>ログイン画面</h1>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<div class="flash">{{ message }}</div>
+{% endfor %}
+{% endif %}
+{% endwith %}       
+       <div class="app">
+        <h2>ログインform</h2>
+        <form action="login" method="post">
+                <div>
+                    <label>ユーザID</label><input type="text" name="id" value="myuser">
+                </div>
+                <div>
+                    <label>パスワード</label><input type="password" name="password" value="mypassword">
+                </div>
+                <div>
+                    <button>ログイン</button>
+                </div>
+            </form>
+        </div>
+        <div class="space"></div>
+        <div class="app">
+            <h2>ログインしない</h2>
+            <p>既にログイン済みのユーザならこのリンクからログイン後の画面に進みます。</p><p>ログインしていないユーザはログイン画面へ戻されます。</p>
+            <a href="login_success">ログインせずに先へ進む</a>
+
+        </div>
+    </body>
+</html>

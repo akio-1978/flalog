@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ログイン後画面</title>
+        <style>
+            .app{
+                width: 20em;
+                padding: 1em;
+                margin-left: auto;
+                margin-right: auto;
+                border: 1px solid;
+            }
+            label{
+                margin-right: 1em;
+            }
+        </style>
+
+    </head>
+    <body>
+        <h1>{{id}}君は今ログイン中だよ！</h1>
+        <div class="app">
+            <form action="logout" method="post">
+                <div>
+                    <input type="hidden" name="id" value="{{id}}">
+                    <input type="submit" value="すぐにログアウトする">
+                </div>
+                <div>
+                    <a href="/login_gamen">ログアウトせずに戻る</a>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

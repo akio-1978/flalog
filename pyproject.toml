@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "flalog"
+version = "0.1.0"
+description = ""
+authors = ["Akio Ogawa <akio.ogawa02@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+flask = "^3.0.1"
+flask-login = "^0.6.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
