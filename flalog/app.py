@@ -1,6 +1,6 @@
 from flask import Flask, url_for, render_template, redirect, request, flash
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
-from .user import get_user
+from .user import my_user
 
 app = Flask(__name__)
 # flaskのセッション用キー
@@ -9,19 +9,18 @@ app.config['SECRET_KEY'] = 'secret-key-for-flask-session'
 # Flask-Loginの初期化
 login_manager = LoginManager()
 login_manager.init_app(app)
-# ログインしていない時に送り返す先
+# ログインしていない時に送り返す先（ログイン画面）
 login_manager.login_view = 'login_gamen'
 # ログインしていない時に表示するメッセージ
-login_manager.login_message = 'ログインしてないからログイン画面に戻します！'
+login_manager.login_message = 'ログインしていないのでログイン画面に戻しました。'
 
 
 @login_manager.user_loader
 def get_user(id):
     """
-    Flask-Loginからのコールバック
-    本当はDBとか見るけど、今回はユーザひとりなのでIDだけ合ってればよし
+    Flask-Loginからコールバックされる。今回はIDの照合だけします
     """
-    user = get_user()
+    user = my_user(id)
     return user if id == user.id else None 
 
 @app.route('/')
@@ -32,30 +31,28 @@ def login_gamen():
 
 @app.route('/login', methods=['POST'])
 def login():
-    """
-    自分で認証して、login_user()を呼んでFlask-Loginにログインを伝える。
-    ※認証がただのif文なのでサンプルを見ても気付きにくい
-    """
-    user = get_user()
+    user = my_user(request.form['id'])
+    """認証は自分でパスワードを照合して、ログインはlogin_userでやる。※ここわかりにくい"""
     if request.form['id'] == user.id and request.form['password'] == user.password:
-        # Flask-Login的ログイン完了はここ
+        # Flask-Login的にはここでログイン完了
         login_user(user) 
         return redirect(url_for('login_success'))
     else:
         # ログイン失敗 ログイン画面に戻す
-        flash('ログインに失敗したよ！')
+        flash('ログインに失敗しました。')
         return redirect(url_for('login_gamen'))
 
 # @login_required がログイン必須route
 @app.route('/login_success')
 @login_required
 def login_success():
-    """ログイン中のユーザはcurrent_userで参照可能"""
+    """ログイン成功画面を表示する。"""
+    # current_userが今ログイン中のユーザ
     return render_template('login_success.html', id=current_user.id)
 
 # ログアウト
 @app.route('/logout', methods=['POST'])
 def logout():
-    """ログアウト"""
+    """ログアウト（特に引数なし）"""
     logout_user()
     return render_template('logout_success.html')

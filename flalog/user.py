@@ -1,12 +1,15 @@
 from flask_login import UserMixin
+# すごく簡略化したユーザオブジェクト
 
 class User(UserMixin):
-    """ユーザを表すオブジェクト"""
-    """説明用なのでDBに格納もしないし、パスワードのハッシュ化とかもなし"""
+    """ユーザを表すオブジェクト、ただIDとパスワードを持つ"""
     def __init__(self ,id, password) -> None:
         self.id = id
         self.password = password
 
-def get_user():
-    """ユーザはmyuserひとりだけ（簡略化）"""
-    return User('myuser', 'mypassword')
+# 簡略化のため、ユーザはひとりだけ
+user = User('myuser', 'mypassword')
+
+def my_user(id):
+    """常に同じユーザを返す（idはそれっぽく書いたダミー）"""
+    return user

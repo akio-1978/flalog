@@ -17,16 +17,21 @@
 
     </head>
     <body>
-        <h1>{{id}}君は今ログイン中だよ！</h1>
+        <h1>{{id}}としてログイン中です</h1>
         <div class="app">
             <form action="logout" method="post">
-                <div>
-                    <input type="hidden" name="id" value="{{id}}">
-                    <input type="submit" value="すぐにログアウトする">
-                </div>
-                <div>
+                <p>
+                    ログアウトするとログイン画面に戻ります。再びログインしないとこの画面には入れません。
+                </p>
+                <p>
+                        <input type="submit" value="すぐにログアウトする">
+                </p>
+                <p>
+                    ログアウトせずにログイン画面へ戻ります。ログインせずにこの画面に戻れます。
+                </p>
+                <p>
                     <a href="/login_gamen">ログアウトせずに戻る</a>
-                </div>
+                </p>
             </form>
         </div>
     </body>
